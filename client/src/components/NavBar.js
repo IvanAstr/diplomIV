@@ -62,7 +62,7 @@ const NavBar = observer(() => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-
+    navigate(LOGIN_ROUTE)
     console.log(user)
     user.logout(); // Сброс состояния авторизации пользователя
   };

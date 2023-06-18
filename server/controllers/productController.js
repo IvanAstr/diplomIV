@@ -7,17 +7,18 @@ const ApiError = require("../error/apiError");
 class ProductController {
     async create(req, res, next) {
         try {
-            const { name, price, BrandId, TypeId, description } = req.body
+            const { name, price, BrandId, TypeId, description, size,color } = req.body
             const { img } = req.files
             let fileName = uuid.v4() + ".jpg"
 
             img.mv(path.resolve(__dirname, "..", "static", fileName));
-            const product = await Product.create({ name, price, BrandId, TypeId, img: fileName,description });
+            const product = await Product.create({ name, price, BrandId, TypeId, img: fileName,description,color,size });
 
 
             return res.json(product)
 
         } catch (e) {
+            console.log(e)
             next(ApiError.badRequest(e.message));
         }
 
@@ -66,6 +67,11 @@ class ProductController {
         return res.json(products);
     }
 
+    async getAll2(req, res) {
+        const products = await Product.findAll();
+        return res.json(products);
+    }
+
     async getOne(req, res) {
         const { id } = req.params
         const product = await Product.findOne(
@@ -81,7 +87,7 @@ class ProductController {
     async delete(req, res) {
         const product = await Product.findOne({
             where: {
-                id: req.body.id
+                id: req.params.id
             }
         })
 
@@ -91,7 +97,7 @@ class ProductController {
             });
         }
 
-        await product.destroy({ where: { id: req.body.id } })
+        await product.destroy({ where: { id: req.params.id } })
         res.status(200).json({ message: 'Товар удвлен' });
     }
     async update(req, res) {

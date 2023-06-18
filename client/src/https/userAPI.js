@@ -6,7 +6,7 @@ export const useRegistration = () => {
   const { request } = useHttp();
 
   const registration = async (email, password) => {
-    const response = await request('/api/user/registration', 'POST', { email, password, role: "ADMIN" });
+    const response = await request('api/user/registration', 'POST', { email, password, role: "ADMIN" });
     return response;
   };
 

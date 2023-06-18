@@ -145,7 +145,10 @@ const Auth = () => {
             console.log(response);
             user.setIsAuth(true);
             user.setToken(response.data.jwtToken); // Сохранение токена в localStorage
+            setTimeout(()=> window.location.reload(),200)
+
             navigate(SHOP_ROUTE);
+
           } else {
             setShowModal(true);
             setModalMessage('Неверный логин или пароль!');

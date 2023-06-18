@@ -16,6 +16,8 @@ const ProductPage = observer(() => {
   const { id } = useParams();
   const { productStore, basket } = useContext(Context);
 
+  const { user } = useContext(Context);
+
   const { fetchOneProduct } = useFetchOneProduct();
   const { addProduct } = useAddProductInBasket();
   const [showModal, setShowModal] = useState(false); // Состояние для отображения/скрытия модального окна
@@ -78,7 +80,10 @@ const ProductPage = observer(() => {
                 <option value="3">Белый</option>
                 <option value="3">Черный</option>
               </Form.Select>
-              <Button className='mt-4' variant='outline-dark' onClick={handleAddToCart}>Добавить в корзину</Button>
+              {user.isAuth ? (
+                <Button className='mt-4' variant='outline-dark' onClick={handleAddToCart}>Добавить в корзину</Button>
+              ) : (<></>)
+              }
             </div>
           </div>
         </Row>

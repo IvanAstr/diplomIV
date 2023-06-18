@@ -15,7 +15,7 @@ class BrandController{
     async delete(req, res){
         const brand = await Brand.findOne({
             where: {
-                id: req.body.id
+                id: req.params.id
             }
         })
         
@@ -25,19 +25,31 @@ class BrandController{
             });
         }
     
-        await Brand.destroy({where: {id: req.body.id}})
+        await Brand.destroy({where: {id: req.params.id}})
         res.status(200).json({message: 'Бренд удвлен'});
     }
     async update(req, res){
-        const brand = await Brand.findOne({where: {id: req.body.id}})
-        if(!brand){
-            req.status(400).json({message:"Бренд не найден"})
+        try {
+
+            const brand = await Brand.findOne({where: {id: req.params.id}})
+            if(!brand){
+                req.status(400).json({message:"Бренд не найден"})
+            }
+            console.log(req.body.name)
+            console.log(req.params.id)
+            Brand.update({
+                name: req.body.name,
+            },
+                { where: { id: req.params.id } });
+    
+            res.status(200).json({ message: "Тип обновлен" });
+            
+        } catch (error) {
+            console.log(error);
         }
-        brand.update({
-            name: req.body.name
-        }, {where: {id: req.body.id}});
-        res.status(200).json({ message: "Бренд обновлен" });
     }
+
+
 }
 
 module.exports = new BrandController();

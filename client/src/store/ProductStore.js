@@ -12,6 +12,8 @@ export default class ProductStore {
         this._products = [
 
         ]
+
+
         this._page = 1;
         this._totalCount = 0;
         this._limit = 3;
@@ -29,6 +31,8 @@ export default class ProductStore {
     setProducts(product) {
         this._products = product
     }
+
+
     setSelectedType(type) {
         this.setPage(1)
         this._selectedType = type
@@ -45,6 +49,7 @@ export default class ProductStore {
         this._totalCount = count
     }
 
+
     get types() {
         return this._types
     }
@@ -54,6 +59,7 @@ export default class ProductStore {
     get products() {
         return this._products
     }
+
     get selectedType() {
         return this._selectedType
     }

@@ -9,6 +9,7 @@ import ProductList from '../components/ProductList';
 import { useFetchType } from '../https/productAPI';
 import { useFetchBrand } from '../https/productAPI';
 import { useFetchProduct } from '../https/productAPI';
+// import { useFetchProduct2 } from '../https/productAPI';
 import Pages from '../components/Pages';
 
 const Shop = observer(() => {
@@ -16,6 +17,8 @@ const Shop = observer(() => {
     const { fetchType } = useFetchType();
     const { fetchBrand } = useFetchBrand();
     const { fetchProduct } = useFetchProduct();
+    // const { fetchProduct2 } = useFetchProduct2();
+
     const { product } = useContext(Context);
 
     useEffect(() => {

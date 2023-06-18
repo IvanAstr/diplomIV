@@ -7,12 +7,27 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { Context } from '../../index';
 import { Dropdown } from 'react-bootstrap';
+import { useUpdateBrand } from '../../https/productAPI';
+
 const EditBrand = ({ show, onHide }) => {
     const { product } = useContext(Context)
     const [info, setInfo] = useState([])
     const addInfo = () => {
         setInfo([...info, { title: '', description: '', number: Date.now() }])
     }
+    const { updateBrand } = useUpdateBrand();
+
+    const [name, setName] = useState()
+    const [brand, setBrand] = useState();
+
+    const update = () => {
+        console.log(name)
+        updateBrand(brand, name).then(data => setBrand(''))
+        setTimeout(() => window.location.reload(), 200)
+
+        onHide();
+    }
+
     return (
         <Modal
             show={show}
@@ -20,6 +35,7 @@ const EditBrand = ({ show, onHide }) => {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            className="d-flex justify-content-center align-items-center "
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
@@ -38,10 +54,15 @@ const EditBrand = ({ show, onHide }) => {
                     </Dropdown> */}
 
 
-                    <Form.Select className="mt-3" style={{ width: 200, height: 40 }} aria-label="Default select example">
+                    <Form.Select className="mt-3" style={{ minWidth: 300, height: 40 }} aria-label="Default select example">
                         <option>Выберите бренд</option>
                         {product.brands.map(brand =>
-                            <option value={brand.id} key={brand.id}>{brand.name}</option>
+                            <option 
+                            value={brand.id} 
+                            onClick={e => setBrand(e.target.value)}
+                            key={brand.id}>
+                                {brand.name}
+                            </option>
 
                         )}
                     </Form.Select>
@@ -49,15 +70,16 @@ const EditBrand = ({ show, onHide }) => {
                         <Form.Control
                             type="text"
                             placeholder="Введите новое название бренда"
+                            onChange={(e)=>{setName(e.target.value)}}
                             autoFocus
                         />
                     </Form.Group>
                     
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="d-flex justify-content-center align-items-center ">
                 <Button variant='outline-danger' onClick={onHide}>Закрыть</Button>
-                <Button variant='outline-success' onClick={onHide}>Сохранить</Button>
+                <Button variant='outline-success' onClick={update}>Сохранить</Button>
             </Modal.Footer>
         </Modal>
 

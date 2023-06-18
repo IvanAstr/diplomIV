@@ -30,16 +30,24 @@ class TypeController {
     }
 
     async update(req, res){
-        const type = await Type.findOne({where:{id: req.params.id}})
-        if(!type){
-            res.status(400).json({ message: 'Тип не найден' });
-        }
-        Type.update({
-            name: req.body.name,
-        },
-            { where: { id: req.params.id } });
+        try {
 
-        res.status(200).json({ message: "Тип обновлен" });
+            const type = await Type.findOne({where:{id: req.params.id}})
+            if(!type){
+                res.status(400).json({ message: 'Тип не найден' });
+            }
+            const {name} = req.body
+            console.log(name)
+            Type.update({
+                name: req.body.name,
+            },
+                { where: { id: req.params.id } });
+    
+            res.status(200).json({ message: "Тип обновлен" });
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 }

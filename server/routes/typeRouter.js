@@ -3,10 +3,10 @@ const router = new Router();
 const typeController = require("../controllers/typeController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 
-router.post('/', checkRoleMiddleware("ADMIN"),typeController.create);
-router.get('/', typeController.getAll);
-router.delete('/:id',checkRoleMiddleware("ADMIN") ,typeController.delete);
-router.put('/:id', checkRoleMiddleware("ADMIN"),typeController.update);
+router.post('/create', typeController.create);
+router.get('/all', typeController.getAll);
+router.delete('/delete/:id',typeController.delete);
+router.put('/update/:id',typeController.update);
 
 
 module.exports = router
